@@ -1,5 +1,6 @@
 from abc import ABC, abstractmethod
 import csv
+from datetime import datetime
 
 from hcad_star_schema.domain.real_estate.account_owner.account_owner import AccountOwner
 
@@ -11,11 +12,16 @@ class AccountOwnerSource(ABC):
         pass
 
     def _make_account_owner(self, record):
+        print('record == ', record)
         clean_records = { key: value.strip() for key, value in record.items() }
+        print('clean_records == ', clean_records)
 
         return AccountOwner(
             clean_records['acct'],
             clean_records['site_addr_3'],
+            int(clean_records['tot_appr_val']),
+            datetime.strptime(clean_records['new_own_dt'], "%m/%d/%Y").date(),
+            clean_records['lgl_1'],
         )
 
 

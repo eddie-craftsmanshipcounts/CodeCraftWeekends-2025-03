@@ -1,15 +1,19 @@
 import unittest
+from unittest import mock
+from unittest.mock import MagicMock
 import os
+from datetime import datetime, date
 
 from hcad_star_schema.domain.real_estate.account_owner.account_owner_source import AccountOwnerSource
 from hcad_star_schema.domain.real_estate.account_owner.account_owner_source import TabSeparatedAccountOwnerSource
 
 
-class TestTabSeparatedAccountOwnerSourceShould(unittest.TestCase):
+class TestReadFromFileShould(unittest.TestCase):
     def setUp(self):
         path = 'data/unit_test/real_acc.txt'
         source: AccountOwnerSource = TabSeparatedAccountOwnerSource(path)
-        self.account_owner = next(iter(source))
+        self.account_owners = list(iter(source))
+        self.account_owner = self.account_owners[0]
 
     def test_read_acctount_id_for_each_row(self):
         self.assertEqual(self.account_owner._account_id, '0010010000013')
@@ -17,6 +21,33 @@ class TestTabSeparatedAccountOwnerSourceShould(unittest.TestCase):
     def test_read_acctount_postal_code_for_each_row(self):
         self.assertEqual(self.account_owner._postal_code, '77002')
 
-    @unittest.skip
     def test_read_total_approved_value(self):
-        self.assertEqual(self.total_approved_value, 0)
+        self.assertEqual(self.account_owner._total_approved_value, 0)
+
+    def test_read_date_last_purchased(self):
+        self.assertEqual(self.account_owner._last_purchased_on, date(1988, 1, 2))
+
+    def test_read_legal_description(self):
+        self.assertEqual(self.account_owner._legal_description, 'ALL BLK 1')
+
+class TestInvalidZipCodeShould(unittest.TestCase):
+    def test_load_null_instead_of_empty_string(self):
+        def tsv_row(*args):
+            return "\t".join(args)
+
+        mock_file_source = [
+            tsv_row('acct', 'site_addr_3', 'tot_appr_val', 'new_own_dt', 'lgl_1'),
+            tsv_row(':ignored:', '', '0', '01/01/2025', ':ignored:')
+        ]
+        with unittest.mock.patch('builtins.open') as open_mock:
+            with unittest.mock.patch('builtins.close') as close_mock:
+                open_mock.return_value = mock_file_source
+                path = 'data/unit_test/real_acc.txt'
+                source: AccountOwnerSource = TabSeparatedAccountOwnerSource(path)
+                self.account_owners = list(iter(source))
+                self.account_owner = self.account_owners[0]
+
+        self.assertIsNone(self.account_owner._postal_code, "Postal Code should be None")
+
+
+# Should this move to Infrastructure? It's testing an adapter!
