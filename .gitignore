@@ -172,5 +172,5 @@ cython_debug/
 .idea/
 
 # Data dir
-data/
+data/source
 Real_acct_owner.zip
