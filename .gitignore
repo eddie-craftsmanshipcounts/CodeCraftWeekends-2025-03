@@ -170,4 +170,7 @@ cython_debug/
 # PyPI configuration file
 .pypirc
 .idea/
+
+# Data dir
+data/
 Real_acct_owner.zip

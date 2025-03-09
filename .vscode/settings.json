@@ -1,0 +1,12 @@
+{
+    "makefile.configureOnOpen": false,
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./src/hcad_star_schema",
+        "-p",
+        "test_*.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": true
+}
