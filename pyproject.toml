@@ -1,0 +1,14 @@
+[project]
+name = "hcad-star-schema"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+authors = [
+    { name = "Eddie Bush", email = "eddie@craftsmanshipcounts.com" }
+]
+requires-python = ">=3.12"
+dependencies = []
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
