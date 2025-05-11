@@ -4,7 +4,7 @@ from datetime import datetime
 
 from hcad_star_schema.domain.real_estate.account_owner.account_owner import Parcel
 
-class AccountOwnerSource(ABC):
+class ParcelSource(ABC):
     def __next__(self) -> Parcel:
         return self.next()
 
@@ -26,7 +26,7 @@ class AccountOwnerSource(ABC):
         )
 
 
-class TabSeparatedAccountOwnerSource(AccountOwnerSource):
+class TabSeparatedAccountOwnerSource(ParcelSource):
     def __init__(self, filepath: str):
         self._filepath = filepath
 
