@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 import csv
 from datetime import datetime
 
-from hcad_star_schema.domain.real_estate.account_owner.account_owner import Parcel
+from hcad_star_schema.domain.real_estate.account_owner.parcel import Parcel
 
 class ParcelSource(ABC):
     def __next__(self) -> Parcel:
