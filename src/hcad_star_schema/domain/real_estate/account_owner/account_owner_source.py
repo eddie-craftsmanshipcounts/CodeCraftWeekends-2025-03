@@ -26,7 +26,7 @@ class ParcelSource(ABC):
         )
 
 
-class TabSeparatedAccountOwnerSource(ParcelSource):
+class TabSeparatedParcelSource(ParcelSource):
     def __init__(self, filepath: str):
         self._filepath = filepath
 

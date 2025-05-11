@@ -6,13 +6,13 @@ from datetime import datetime, date
 import io
 
 from hcad_star_schema.domain.real_estate.account_owner.account_owner_source import ParcelSource
-from hcad_star_schema.domain.real_estate.account_owner.account_owner_source import TabSeparatedAccountOwnerSource
+from hcad_star_schema.domain.real_estate.account_owner.account_owner_source import TabSeparatedParcelSource
 
 
 class TestReadFromFileShould(unittest.TestCase):
     def setUp(self):
         path = 'data/unit_test/real_acc.txt'
-        source: ParcelSource = TabSeparatedAccountOwnerSource(path)
+        source: ParcelSource = TabSeparatedParcelSource(path)
         self.account_owners = list(iter(source))
         self.account_owner = self.account_owners[0]
 
@@ -46,7 +46,7 @@ class TestInvalidZipCodeShould(unittest.TestCase):
         with unittest.mock.patch('builtins.open') as open_mock:
             open_mock.return_value = mock_file
             path = 'data/unit_test/real_acc.txt'
-            source: ParcelSource = TabSeparatedAccountOwnerSource(path)
+            source: ParcelSource = TabSeparatedParcelSource(path)
             self.account_owners = list(iter(source))
             self.account_owner = self.account_owners[0]
 
