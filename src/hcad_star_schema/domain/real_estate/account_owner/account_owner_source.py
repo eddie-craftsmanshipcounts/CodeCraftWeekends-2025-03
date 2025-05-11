@@ -2,10 +2,10 @@ from abc import ABC, abstractmethod
 import csv
 from datetime import datetime
 
-from hcad_star_schema.domain.real_estate.account_owner.account_owner import AccountOwner
+from hcad_star_schema.domain.real_estate.account_owner.account_owner import Parcel
 
 class AccountOwnerSource(ABC):
-    def __next__(self) -> AccountOwner:
+    def __next__(self) -> Parcel:
         return self.next()
 
     def __iter__(self):
@@ -17,7 +17,7 @@ class AccountOwnerSource(ABC):
         print('clean_records == ', clean_records)
         clean_records = { key: None if value == '' else value for key, value in clean_records.items() }
 
-        return AccountOwner(
+        return Parcel(
             clean_records['acct'],
             clean_records['site_addr_3'],
             int(clean_records['tot_appr_val']),
@@ -36,7 +36,7 @@ class TabSeparatedAccountOwnerSource(AccountOwnerSource):
 
         return self
 
-    def __next__(self) -> AccountOwner:
+    def __next__(self) -> Parcel:
         """Return the next Account from the TSV file."""
         if self._reader is None:
             raise StopIteration

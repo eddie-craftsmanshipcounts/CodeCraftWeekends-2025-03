@@ -1,6 +1,6 @@
 from datetime import date
 
-class AccountOwner:
+class Parcel:
     def __init__(
         self,
         account_id: str,
