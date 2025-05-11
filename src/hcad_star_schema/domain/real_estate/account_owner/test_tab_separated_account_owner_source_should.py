@@ -5,8 +5,8 @@ import os
 from datetime import datetime, date
 import io
 
-from hcad_star_schema.domain.real_estate.account_owner.account_owner_source import ParcelSource
-from hcad_star_schema.domain.real_estate.account_owner.account_owner_source import TabSeparatedParcelSource
+from hcad_star_schema.domain.real_estate.account_owner.parcel_source import ParcelSource
+from hcad_star_schema.domain.real_estate.account_owner.parcel_source import TabSeparatedParcelSource
 
 
 class TestReadFromFileShould(unittest.TestCase):
