@@ -13,23 +13,23 @@ class TestReadFromFileShould(unittest.TestCase):
     def setUp(self):
         path = 'data/unit_test/real_acc.txt'
         source: ParcelSource = TabSeparatedParcelSource(path)
-        self.account_owners = list(iter(source))
-        self.account_owner = self.account_owners[0]
+        self.parcels = list(iter(source))
+        self.parcel = self.parcels[0]
 
     def test_read_acctount_id_for_each_row(self):
-        self.assertEqual(self.account_owner._account_id, '0010010000013')
+        self.assertEqual(self.parcel._account_id, '0010010000013')
     
     def test_read_acctount_postal_code_for_each_row(self):
-        self.assertEqual(self.account_owner._postal_code, '77002')
+        self.assertEqual(self.parcel._postal_code, '77002')
 
     def test_read_total_approved_value(self):
-        self.assertEqual(self.account_owner._total_approved_value, 0)
+        self.assertEqual(self.parcel._total_approved_value, 0)
 
     def test_read_date_last_purchased(self):
-        self.assertEqual(self.account_owner._last_purchased_on, date(1988, 1, 2))
+        self.assertEqual(self.parcel._last_purchased_on, date(1988, 1, 2))
 
     def test_read_legal_description(self):
-        self.assertEqual(self.account_owner._legal_description, 'ALL BLK 1')
+        self.assertEqual(self.parcel._legal_description, 'ALL BLK 1')
 
 class TestInvalidZipCodeShould(unittest.TestCase):
     def test_load_null_instead_of_empty_string(self):
@@ -47,10 +47,10 @@ class TestInvalidZipCodeShould(unittest.TestCase):
             open_mock.return_value = mock_file
             path = 'data/unit_test/real_acc.txt'
             source: ParcelSource = TabSeparatedParcelSource(path)
-            self.account_owners = list(iter(source))
-            self.account_owner = self.account_owners[0]
+            self.parcels = list(iter(source))
+            self.parcel = self.parcels[0]
 
-        self.assertIsNone(self.account_owner._postal_code, "Postal Code should be None")
+        self.assertIsNone(self.parcel._postal_code, "Postal Code should be None")
 
 
 # Should this move to Infrastructure? It's testing an adapter!

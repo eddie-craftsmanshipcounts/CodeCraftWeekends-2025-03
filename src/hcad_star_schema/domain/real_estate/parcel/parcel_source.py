@@ -11,7 +11,7 @@ class ParcelSource(ABC):
     def __iter__(self):
         pass
 
-    def _make_account_owner(self, record):
+    def _new_from_record(self, record):
         print('record == ', record)
         clean_records = { key: value.strip() for key, value in record.items() }
         print('clean_records == ', clean_records)
@@ -44,7 +44,7 @@ class TabSeparatedParcelSource(ParcelSource):
         try:
             record = next(self._reader)
             # Convert row to Account (adjust field indices based on your TSV structure)
-            return self._make_account_owner(record)
+            return self._new_from_record(record)
         except StopIteration:
             if self._file:
                 self._file.close()
