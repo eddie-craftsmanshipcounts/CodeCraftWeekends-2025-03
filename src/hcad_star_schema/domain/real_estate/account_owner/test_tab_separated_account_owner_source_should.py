@@ -3,6 +3,7 @@ from unittest import mock
 from unittest.mock import MagicMock
 import os
 from datetime import datetime, date
+import io
 
 from hcad_star_schema.domain.real_estate.account_owner.account_owner_source import AccountOwnerSource
 from hcad_star_schema.domain.real_estate.account_owner.account_owner_source import TabSeparatedAccountOwnerSource
@@ -35,17 +36,19 @@ class TestInvalidZipCodeShould(unittest.TestCase):
         def tsv_row(*args):
             return "\t".join(args)
 
-        mock_file_source = [
+        content = [
             tsv_row('acct', 'site_addr_3', 'tot_appr_val', 'new_own_dt', 'lgl_1'),
             tsv_row(':ignored:', '', '0', '01/01/2025', ':ignored:')
         ]
+
+        mock_file = io.StringIO("\n".join(content))
+
         with unittest.mock.patch('builtins.open') as open_mock:
-            with unittest.mock.patch('builtins.close') as close_mock:
-                open_mock.return_value = mock_file_source
-                path = 'data/unit_test/real_acc.txt'
-                source: AccountOwnerSource = TabSeparatedAccountOwnerSource(path)
-                self.account_owners = list(iter(source))
-                self.account_owner = self.account_owners[0]
+            open_mock.return_value = mock_file
+            path = 'data/unit_test/real_acc.txt'
+            source: AccountOwnerSource = TabSeparatedAccountOwnerSource(path)
+            self.account_owners = list(iter(source))
+            self.account_owner = self.account_owners[0]
 
         self.assertIsNone(self.account_owner._postal_code, "Postal Code should be None")
 

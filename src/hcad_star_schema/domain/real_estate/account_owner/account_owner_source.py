@@ -15,6 +15,7 @@ class AccountOwnerSource(ABC):
         print('record == ', record)
         clean_records = { key: value.strip() for key, value in record.items() }
         print('clean_records == ', clean_records)
+        clean_records = { key: None if value == '' else value for key, value in clean_records.items() }
 
         return AccountOwner(
             clean_records['acct'],
